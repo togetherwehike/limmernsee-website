@@ -1,34 +1,1240 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>LIMMERNSEE — Field System 001</title>
 <meta name="description" content="Limmernsee Field System 001. Veil Shell / System 3.">
+
 <style>
-:root{--bg:#050505;--fg:#f1f1ed;--muted:#8b8b87;--line:#252525;--accent:#d7d2c8}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif;letter-spacing:.02em}a{color:inherit;text-decoration:none}img{display:block;width:100%}
-.top{position:fixed;z-index:50;top:0;left:0;right:0;height:72px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#050505dd,#05050500);mix-blend-mode:normal}.brand{font-size:12px;letter-spacing:.42em}.menu{width:42px;height:42px;border:1px solid #ffffff30;border-radius:50%;background:#080808aa;color:white;font-size:20px}.nav{position:fixed;z-index:49;inset:0;background:#050505f5;display:none;align-items:center;justify-content:center}.nav.open{display:flex}.nav div{display:grid;gap:22px;text-align:center;font-size:25px;letter-spacing:.12em}.nav small{font-size:10px;color:var(--muted);letter-spacing:.3em}
-.hero{height:100svh;position:relative;overflow:hidden}.hero img{height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0002 35%,#000c 100%)}.hero-copy{position:absolute;z-index:2;left:7vw;right:7vw;bottom:8vh;text-align:center}.kicker,.eyebrow{font-size:10px;letter-spacing:.38em;color:#c8c8c4;text-transform:uppercase}.hero h1{font-weight:400;font-size:clamp(42px,10vw,112px);letter-spacing:.22em;margin:14px 0 10px}.hero p{font-size:11px;letter-spacing:.34em;color:#aaa;text-transform:uppercase}.enter{margin-top:28px;display:inline-block;border-bottom:1px solid #aaa;padding:12px 2px;font-size:11px;letter-spacing:.3em}
-.section{padding:110px 5vw;border-top:1px solid var(--line)}.section-head{max-width:1250px;margin:0 auto 45px;display:flex;justify-content:space-between;align-items:end;gap:30px}.section h2{font-size:clamp(34px,6vw,72px);font-weight:400;letter-spacing:.12em;margin:10px 0}.section-head p{max-width:430px;color:#aaa;line-height:1.8;font-size:14px}.product-stage{max-width:1000px;margin:auto;position:relative;background:#000;min-height:65svh;display:flex;align-items:center;justify-content:center}.product-stage img{max-height:80svh;object-fit:contain}.rotate{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.3em;color:#aaa;border:1px solid #333;border-radius:100px;padding:11px 17px;white-space:nowrap}.hotspot{position:absolute;width:42px;height:42px;border-radius:50%;border:1px solid #ffffff70;background:#05050588;color:white}.h1{left:50%;top:22%}.h2{left:26%;top:47%}.h3{right:23%;top:58%}.feature{max-width:1400px;margin:0 auto 34px;position:relative;overflow:hidden}.feature img{max-height:90svh;object-fit:contain;background:#050505}.feature-label{display:flex;justify-content:space-between;margin-top:14px;color:#777;font-size:9px;letter-spacing:.28em;text-transform:uppercase}.environment{position:relative;height:92svh;overflow:hidden}.environment img{height:100%;object-fit:cover}.environment:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0001,#0007)}.envcopy{position:absolute;z-index:2;left:6vw;bottom:8vh}.envcopy h2{font-weight:400;font-size:clamp(34px,6vw,80px);letter-spacing:.15em;margin:12px 0}.tech img{max-width:1600px;margin:auto}.signup{text-align:center;padding:140px 6vw 160px}.signup h2{font-weight:400;font-size:clamp(36px,7vw,84px);letter-spacing:.12em;margin:14px 0}.signup p{color:#888;line-height:1.7}.form{max-width:560px;margin:45px auto 0;display:flex;border-bottom:1px solid #555}.form input{flex:1;background:none;border:0;outline:0;color:white;padding:18px 4px;font-size:15px}.form button{border:0;background:none;color:white;letter-spacing:.2em;font-size:10px}.footer{border-top:1px solid var(--line);padding:30px 5vw 50px;display:flex;justify-content:space-between;color:#666;font-size:9px;letter-spacing:.25em}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}.reveal.in{opacity:1;transform:none}
-@media(max-width:700px){.top{height:64px}.hero-copy{bottom:10vh}.hero h1{font-size:42px;letter-spacing:.15em}.section{padding:82px 0}.section-head{padding:0 24px;display:block;margin-bottom:28px}.section-head p{font-size:13px}.product-stage{min-height:72svh}.product-stage img{height:68svh;object-fit:contain}.feature{margin-bottom:26px}.feature img{width:100%;max-height:none;object-fit:cover}.feature-label{padding:0 20px}.environment{height:76svh}.tech{padding-left:0;padding-right:0}.signup{padding:110px 24px}.footer{display:grid;gap:12px}.hotspot{width:36px;height:36px}.h1{top:23%}.h2{left:18%}.h3{right:15%}}
-</style></head>
+:root{
+  --bg:#050505;
+  --fg:#f1f1ed;
+  --muted:#8b8b87;
+  --line:#252525;
+  --accent:#d7d2c8;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg)
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:Arial,Helvetica,sans-serif;
+  letter-spacing:.02em
+}
+
+a{
+  color:inherit;
+  text-decoration:none
+}
+
+img{
+  display:block;
+  width:100%
+}
+
+/* HEADER */
+
+.top{
+  position:fixed;
+  z-index:50;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  padding:0 5vw;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(#050505dd,#05050500);
+  mix-blend-mode:normal
+}
+
+.brand{
+  font-size:12px;
+  letter-spacing:.42em
+}
+
+.menu{
+  width:42px;
+  height:42px;
+  border:1px solid #ffffff30;
+  border-radius:50%;
+  background:#080808aa;
+  color:white;
+  font-size:20px
+}
+
+.nav{
+  position:fixed;
+  z-index:49;
+  inset:0;
+  background:#050505f5;
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+
+.nav.open{
+  display:flex
+}
+
+.nav div{
+  display:grid;
+  gap:22px;
+  text-align:center;
+  font-size:25px;
+  letter-spacing:.12em
+}
+
+.nav small{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:.3em
+}
+
+/* HERO */
+
+.hero{
+  height:100svh;
+  position:relative;
+  overflow:hidden
+}
+
+.hero img{
+  height:100%;
+  object-fit:cover
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,#0002 35%,#000c 100%)
+}
+
+.hero-copy{
+  position:absolute;
+  z-index:2;
+  left:7vw;
+  right:7vw;
+  bottom:8vh;
+  text-align:center
+}
+
+.kicker,
+.eyebrow{
+  font-size:10px;
+  letter-spacing:.38em;
+  color:#c8c8c4;
+  text-transform:uppercase
+}
+
+.hero h1{
+  font-weight:400;
+  font-size:clamp(42px,10vw,112px);
+  letter-spacing:.22em;
+  margin:14px 0 10px
+}
+
+.hero p{
+  font-size:11px;
+  letter-spacing:.34em;
+  color:#aaa;
+  text-transform:uppercase
+}
+
+.enter{
+  margin-top:28px;
+  display:inline-block;
+  border-bottom:1px solid #aaa;
+  padding:12px 2px;
+  font-size:11px;
+  letter-spacing:.3em
+}
+
+/* SECTIONS */
+
+.section{
+  padding:110px 5vw;
+  border-top:1px solid var(--line)
+}
+
+.section-head{
+  max-width:1250px;
+  margin:0 auto 45px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px
+}
+
+.section h2{
+  font-size:clamp(34px,6vw,72px);
+  font-weight:400;
+  letter-spacing:.12em;
+  margin:10px 0
+}
+
+.section-head p{
+  max-width:430px;
+  color:#aaa;
+  line-height:1.8;
+  font-size:14px
+}
+
+/* ======================================================
+   SYSTEM 3 / 360 PRODUCT VIEWER
+   ====================================================== */
+
+.product-stage{
+  max-width:1000px;
+  margin:auto;
+  position:relative;
+  background:#000;
+  min-height:72svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+  cursor:grab
+}
+
+.product-stage.dragging{
+  cursor:grabbing
+}
+
+.spin-image{
+  width:100%;
+  height:72svh;
+  max-height:820px;
+  object-fit:contain;
+
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+
+  opacity:1;
+  transition:opacity .08s linear
+}
+
+/* subtle edge fade */
+
+.product-stage:before{
+  content:"";
+  position:absolute;
+  z-index:3;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.24),
+      transparent 15%,
+      transparent 85%,
+      rgba(0,0,0,.24)
+    )
+}
+
+/* rotation instruction */
+
+.rotate{
+  position:absolute;
+  z-index:10;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:9px;
+  letter-spacing:.3em;
+  color:#aaa;
+  border:1px solid #333;
+  border-radius:100px;
+  padding:11px 17px;
+  white-space:nowrap;
+
+  pointer-events:none;
+
+  transition:
+    opacity .45s ease,
+    transform .45s ease
+}
+
+.rotate.used{
+  opacity:0;
+  transform:translate(-50%,8px)
+}
+
+/* small rotation tracker */
+
+.spin-progress{
+  position:absolute;
+  z-index:10;
+  right:22px;
+  bottom:27px;
+
+  font-size:8px;
+  color:#666;
+  letter-spacing:.2em;
+
+  pointer-events:none
+}
+
+/* hotspots */
+
+.hotspot{
+  position:absolute;
+  z-index:15;
+
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+  border:1px solid #ffffff70;
+
+  background:#050505aa;
+  color:white;
+
+  backdrop-filter:blur(5px);
+
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    opacity .25s ease
+}
+
+.hotspot:hover{
+  background:#ffffff18;
+  transform:scale(1.08)
+}
+
+.h1{
+  left:50%;
+  top:22%
+}
+
+.h2{
+  left:26%;
+  top:47%
+}
+
+.h3{
+  right:23%;
+  top:58%
+}
+
+/* FEATURES */
+
+.feature{
+  max-width:1400px;
+  margin:0 auto 34px;
+  position:relative;
+  overflow:hidden
+}
+
+.feature img{
+  max-height:90svh;
+  object-fit:contain;
+  background:#050505
+}
+
+.feature-label{
+  display:flex;
+  justify-content:space-between;
+  margin-top:14px;
+  color:#777;
+  font-size:9px;
+  letter-spacing:.28em;
+  text-transform:uppercase
+}
+
+/* ENVIRONMENT */
+
+.environment{
+  position:relative;
+  height:92svh;
+  overflow:hidden
+}
+
+.environment img{
+  height:100%;
+  object-fit:cover
+}
+
+.environment:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,#0001,#0007)
+}
+
+.envcopy{
+  position:absolute;
+  z-index:2;
+  left:6vw;
+  bottom:8vh
+}
+
+.envcopy h2{
+  font-weight:400;
+  font-size:clamp(34px,6vw,80px);
+  letter-spacing:.15em;
+  margin:12px 0
+}
+
+/* TECH */
+
+.tech img{
+  max-width:1600px;
+  margin:auto
+}
+
+/* REGISTER */
+
+.signup{
+  text-align:center;
+  padding:140px 6vw 160px
+}
+
+.signup h2{
+  font-weight:400;
+  font-size:clamp(36px,7vw,84px);
+  letter-spacing:.12em;
+  margin:14px 0
+}
+
+.signup p{
+  color:#888;
+  line-height:1.7
+}
+
+.form{
+  max-width:560px;
+  margin:45px auto 0;
+  display:flex;
+  border-bottom:1px solid #555
+}
+
+.form input{
+  flex:1;
+  background:none;
+  border:0;
+  outline:0;
+  color:white;
+  padding:18px 4px;
+  font-size:15px
+}
+
+.form button{
+  border:0;
+  background:none;
+  color:white;
+  letter-spacing:.2em;
+  font-size:10px
+}
+
+.footer{
+  border-top:1px solid var(--line);
+  padding:30px 5vw 50px;
+  display:flex;
+  justify-content:space-between;
+  color:#666;
+  font-size:9px;
+  letter-spacing:.25em
+}
+
+/* REVEALS */
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .8s ease,transform .8s ease
+}
+
+.reveal.in{
+  opacity:1;
+  transform:none
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .top{
+    height:64px
+  }
+
+  .hero-copy{
+    bottom:10vh
+  }
+
+  .hero h1{
+    font-size:42px;
+    letter-spacing:.15em
+  }
+
+  .section{
+    padding:82px 0
+  }
+
+  .section-head{
+    padding:0 24px;
+    display:block;
+    margin-bottom:28px
+  }
+
+  .section-head p{
+    font-size:13px
+  }
+
+  .product-stage{
+    min-height:72svh
+  }
+
+  .spin-image{
+    height:68svh;
+    object-fit:contain
+  }
+
+  .feature{
+    margin-bottom:26px
+  }
+
+  .feature img{
+    width:100%;
+    max-height:none;
+    object-fit:cover
+  }
+
+  .feature-label{
+    padding:0 20px
+  }
+
+  .environment{
+    height:76svh
+  }
+
+  .tech{
+    padding-left:0;
+    padding-right:0
+  }
+
+  .signup{
+    padding:110px 24px
+  }
+
+  .footer{
+    display:grid;
+    gap:12px
+  }
+
+  .hotspot{
+    width:36px;
+    height:36px
+  }
+
+  .h1{
+    top:23%
+  }
+
+  .h2{
+    left:18%
+  }
+
+  .h3{
+    right:15%
+  }
+
+  .rotate{
+    bottom:21px;
+    font-size:8px;
+    letter-spacing:.24em
+  }
+
+  .spin-progress{
+    right:14px;
+    bottom:72px
+  }
+}
+</style>
+</head>
+
 <body>
-<header class="top"><a class="brand" href="#top">LIMMERNSEE</a><button class="menu" aria-label="Menu">☰</button></header>
-<nav class="nav"><div><small>FIELD SYSTEM 001</small><a href="#system">SYSTEM 3</a><a href="#balaclava">VEIL</a><a href="#cape">STORM CAPE</a><a href="#shell">20K / 20K</a><a href="#construction">CONSTRUCTION</a><a href="#register">REGISTER</a></div></nav>
+
+<header class="top">
+  <a class="brand" href="#top">LIMMERNSEE</a>
+  <button class="menu" aria-label="Menu">☰</button>
+</header>
+
+<nav class="nav">
+  <div>
+    <small>FIELD SYSTEM 001</small>
+    <a href="#system">SYSTEM 3</a>
+    <a href="#balaclava">VEIL</a>
+    <a href="#cape">STORM CAPE</a>
+    <a href="#shell">20K / 20K</a>
+    <a href="#construction">CONSTRUCTION</a>
+    <a href="#register">REGISTER</a>
+  </div>
+</nav>
+
 <main id="top">
-<section class="hero"><img src="assets/01-tunnel-hero.png" alt="Limmernsee tunnel opening onto an alpine reservoir"><div class="hero-copy"><div class="kicker">Field System 001</div><h1>LIMMERNSEE</h1><p>46.822° N / 8.993° E · Switzerland</p><a class="enter" href="#system">ENTER THE ARCHIVE ↓</a></div></section>
-<section class="section" id="system"><div class="section-head reveal"><div><div class="eyebrow">System 3 // Veil Shell</div><h2>ONE SHELL.<br>ONE SYSTEM.</h2></div><p>Built as a unified technical layer. Explore the Veil Shell, its integrated face protection, storm cape and shell construction.</p></div><div class="product-stage reveal"><img src="assets/02-veil-shell-product.png" alt="Ash Stone Veil Shell front view"><button class="hotspot h1" aria-label="Integrated veil">01</button><button class="hotspot h2" aria-label="Storm cape">02</button><button class="hotspot h3" aria-label="20K shell">03</button><div class="rotate">↔ 360° PRODUCT VIEW // COMING NEXT</div></div></section>
-<section class="section" id="balaclava"><div class="section-head reveal"><div><div class="eyebrow">01 // Integrated Balaclava</div><h2>TUCKED INTO<br>THE SYSTEM.</h2></div><p>Face protection becomes part of the silhouette rather than an accessory. The eye area remains open while the lower face is shielded.</p></div><div class="feature reveal"><img src="assets/03-integrated-balaclava.png" alt="Integrated balaclava system detail"><div class="feature-label"><span>01 // Veil System</span><span>Field System 001</span></div></div></section>
-<section class="section" id="cape"><div class="section-head reveal"><div><div class="eyebrow">02 // Storm Cape</div><h2>SIGNATURE<br>PROTECTION.</h2></div><p>The floating upper layer defines the Veil Shell silhouette while adding another level of weather shielding and concealed airflow.</p></div><div class="feature reveal"><img src="assets/04-storm-cape.png" alt="Storm cape technical details"><div class="feature-label"><span>02 // Storm Cape</span><span>Ash Stone</span></div></div></section>
-<section class="section" id="shell"><div class="section-head reveal"><div><div class="eyebrow">03 // Shell</div><h2>20K / 20K<br>PROTECTION.</h2></div><p>A three-layer waterproof shell concept with a quiet matte surface, weather-resistant hardware and technical construction.</p></div><div class="feature reveal"><img src="assets/05-20k-shell.png" alt="Waterproof shell and zip details"><div class="feature-label"><span>03 // 3-Layer Shell</span><span>Built for extremes</span></div></div></section>
-<section class="section"><div class="section-head reveal"><div><div class="eyebrow">04 // Complete System</div><h2>VEIL SHELL +<br>FIELD CARGO.</h2></div><p>A unified silhouette designed around adaptive layering, oversized utility and protection from changing alpine conditions.</p></div><div class="feature reveal"><img src="assets/06-complete-system.png" alt="Two models wearing the complete Limmernsee system"><div class="feature-label"><span>Complete System</span><span>Unisex</span></div></div></section>
-<section class="environment reveal"><img src="assets/07-environment.png" alt="Limmernsee alpine environment"><div class="envcopy"><div class="eyebrow">46.822° N / 8.993° E</div><h2>FIELD TEST.</h2><div class="eyebrow">Limmernsee // Switzerland</div></div></section>
-<section class="section tech" id="construction"><div class="section-head reveal"><div><div class="eyebrow">Technical Construction</div><h2>ENGINEERED<br>AS A SYSTEM.</h2></div><p>Explore the construction language behind System 3: veil, hood, storm layers, adjustments, shell structure and utility.</p></div><img class="reveal" src="assets/08-technical-construction.png" alt="Veil Shell technical construction diagram"></section>
-<section class="signup" id="register"><div class="eyebrow reveal">Field System 001</div><h2 class="reveal">ENTER THE FIELD.</h2><p class="reveal">Register for development updates and first access to System 3.</p><form class="form reveal" onsubmit="event.preventDefault();this.innerHTML='<div style=&quot;padding:18px 4px;width:100%;letter-spacing:.2em;font-size:11px&quot;>REGISTERED // FIELD SYSTEM 001</div>'"><input type="email" required placeholder="EMAIL ADDRESS" aria-label="Email address"><button>REGISTER →</button></form></section>
-</main><footer class="footer"><span>LIMMERNSEE</span><span>FIELD SYSTEM 001</span><span>46.822° N / 8.993° E</span></footer>
+
+<section class="hero">
+
+  <img
+    src="assets/01-tunnel-hero.png"
+    alt="Limmernsee tunnel opening onto an alpine reservoir"
+  >
+
+  <div class="hero-copy">
+    <div class="kicker">Field System 001</div>
+
+    <h1>LIMMERNSEE</h1>
+
+    <p>
+      46.822° N / 8.993° E · Switzerland
+    </p>
+
+    <a class="enter" href="#system">
+      ENTER THE ARCHIVE ↓
+    </a>
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     SYSTEM 3 + 360 VIEWER
+     ================================================== -->
+
+<section class="section" id="system">
+
+  <div class="section-head reveal">
+
+    <div>
+      <div class="eyebrow">
+        System 3 // Veil Shell
+      </div>
+
+      <h2>
+        ONE SHELL.<br>
+        ONE SYSTEM.
+      </h2>
+    </div>
+
+    <p>
+      Built as a unified technical layer.
+      Explore the Veil Shell, its integrated
+      face protection, storm cape and shell
+      construction.
+    </p>
+
+  </div>
+
+
+  <div
+    class="product-stage reveal"
+    id="spinViewer"
+    aria-label="Drag left or right to rotate the Limmernsee Veil Shell"
+  >
+
+    <img
+      class="spin-image"
+      id="spinImage"
+      src="assets/360/jacket-01-front.png"
+      alt="Limmernsee System 3 Veil Shell rotating product view"
+      draggable="false"
+    >
+
+    <button
+      class="hotspot h1"
+      aria-label="Integrated veil"
+    >
+      01
+    </button>
+
+    <button
+      class="hotspot h2"
+      aria-label="Storm cape"
+    >
+      02
+    </button>
+
+    <button
+      class="hotspot h3"
+      aria-label="20K shell"
+    >
+      03
+    </button>
+
+    <div class="rotate" id="spinHint">
+      ↔ DRAG TO ROTATE
+    </div>
+
+    <div class="spin-progress" id="spinProgress">
+      01 / 06
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="balaclava">
+
+  <div class="section-head reveal">
+
+    <div>
+
+      <div class="eyebrow">
+        01 // Integrated Balaclava
+      </div>
+
+      <h2>
+        TUCKED INTO<br>
+        THE SYSTEM.
+      </h2>
+
+    </div>
+
+    <p>
+      Face protection becomes part of the silhouette
+      rather than an accessory. The eye area remains
+      open while the lower face is shielded.
+    </p>
+
+  </div>
+
+  <div class="feature reveal">
+
+    <img
+      src="assets/03-integrated-balaclava.png"
+      alt="Integrated balaclava system detail"
+    >
+
+    <div class="feature-label">
+      <span>01 // Veil System</span>
+      <span>Field System 001</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="cape">
+
+  <div class="section-head reveal">
+
+    <div>
+
+      <div class="eyebrow">
+        02 // Storm Cape
+      </div>
+
+      <h2>
+        SIGNATURE<br>
+        PROTECTION.
+      </h2>
+
+    </div>
+
+    <p>
+      The floating upper layer defines the Veil Shell
+      silhouette while adding another level of weather
+      shielding and concealed airflow.
+    </p>
+
+  </div>
+
+  <div class="feature reveal">
+
+    <img
+      src="assets/04-storm-cape.png"
+      alt="Storm cape technical details"
+    >
+
+    <div class="feature-label">
+      <span>02 // Storm Cape</span>
+      <span>Ash Stone</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="shell">
+
+  <div class="section-head reveal">
+
+    <div>
+
+      <div class="eyebrow">
+        03 // Shell
+      </div>
+
+      <h2>
+        20K / 20K<br>
+        PROTECTION.
+      </h2>
+
+    </div>
+
+    <p>
+      A three-layer waterproof shell concept with
+      a quiet matte surface, weather-resistant
+      hardware and technical construction.
+    </p>
+
+  </div>
+
+  <div class="feature reveal">
+
+    <img
+      src="assets/05-20k-shell.png"
+      alt="Waterproof shell and zip details"
+    >
+
+    <div class="feature-label">
+      <span>03 // 3-Layer Shell</span>
+      <span>Built for extremes</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-head reveal">
+
+    <div>
+
+      <div class="eyebrow">
+        04 // Complete System
+      </div>
+
+      <h2>
+        VEIL SHELL +<br>
+        FIELD CARGO.
+      </h2>
+
+    </div>
+
+    <p>
+      A unified silhouette designed around adaptive
+      layering, oversized utility and protection
+      from changing alpine conditions.
+    </p>
+
+  </div>
+
+  <div class="feature reveal">
+
+    <img
+      src="assets/06-complete-system.png"
+      alt="Two models wearing the complete Limmernsee system"
+    >
+
+    <div class="feature-label">
+      <span>Complete System</span>
+      <span>Unisex</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="environment reveal">
+
+  <img
+    src="assets/07-environment.png"
+    alt="Limmernsee alpine environment"
+  >
+
+  <div class="envcopy">
+
+    <div class="eyebrow">
+      46.822° N / 8.993° E
+    </div>
+
+    <h2>
+      FIELD TEST.
+    </h2>
+
+    <div class="eyebrow">
+      Limmernsee // Switzerland
+    </div>
+
+  </div>
+
+</section>
+
+
+<section
+  class="section tech"
+  id="construction"
+>
+
+  <div class="section-head reveal">
+
+    <div>
+
+      <div class="eyebrow">
+        Technical Construction
+      </div>
+
+      <h2>
+        ENGINEERED<br>
+        AS A SYSTEM.
+      </h2>
+
+    </div>
+
+    <p>
+      Explore the construction language behind
+      System 3: veil, hood, storm layers,
+      adjustments, shell structure and utility.
+    </p>
+
+  </div>
+
+  <img
+    class="reveal"
+    src="assets/08-technical-construction.png"
+    alt="Veil Shell technical construction diagram"
+  >
+
+</section>
+
+
+<section
+  class="signup"
+  id="register"
+>
+
+  <div class="eyebrow reveal">
+    Field System 001
+  </div>
+
+  <h2 class="reveal">
+    ENTER THE FIELD.
+  </h2>
+
+  <p class="reveal">
+    Register for development updates
+    and first access to System 3.
+  </p>
+
+  <form
+    class="form reveal"
+    onsubmit="
+      event.preventDefault();
+      this.innerHTML=
+      '<div style=&quot;padding:18px 4px;width:100%;letter-spacing:.2em;font-size:11px&quot;>REGISTERED // FIELD SYSTEM 001</div>'
+    "
+  >
+
+    <input
+      type="email"
+      required
+      placeholder="EMAIL ADDRESS"
+      aria-label="Email address"
+    >
+
+    <button>
+      REGISTER →
+    </button>
+
+  </form>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+  <span>LIMMERNSEE</span>
+
+  <span>FIELD SYSTEM 001</span>
+
+  <span>
+    46.822° N / 8.993° E
+  </span>
+
+</footer>
+
+
 <script>
-const menu=document.querySelector('.menu'),nav=document.querySelector('.nav');menu.onclick=()=>nav.classList.toggle('open');nav.querySelectorAll('a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
-document.querySelector('.h1').onclick=()=>location.hash='balaclava';document.querySelector('.h2').onclick=()=>location.hash='cape';document.querySelector('.h3').onclick=()=>location.hash='shell';
-</script></body></html>
+
+/* =====================================================
+   MENU
+   ===================================================== */
+
+const menu = document.querySelector('.menu');
+const nav = document.querySelector('.nav');
+
+menu.onclick = () => {
+  nav.classList.toggle('open');
+};
+
+nav.querySelectorAll('a').forEach(a => {
+  a.onclick = () => nav.classList.remove('open');
+});
+
+
+/* =====================================================
+   SCROLL REVEALS
+   ===================================================== */
+
+const io = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+      }
+    });
+  },
+  {
+    threshold:.12
+  }
+);
+
+document
+  .querySelectorAll('.reveal')
+  .forEach(el => io.observe(el));
+
+
+/* =====================================================
+   HOTSPOTS
+   ===================================================== */
+
+document.querySelector('.h1').onclick = e => {
+  e.stopPropagation();
+  location.hash = 'balaclava';
+};
+
+document.querySelector('.h2').onclick = e => {
+  e.stopPropagation();
+  location.hash = 'cape';
+};
+
+document.querySelector('.h3').onclick = e => {
+  e.stopPropagation();
+  location.hash = 'shell';
+};
+
+
+/* =====================================================
+   LIMMERNSEE 360 PRODUCT VIEW
+   ===================================================== */
+
+const spinFrames = [
+
+  'assets/360/jacket-01-front.png',
+
+  'assets/360/jacket-02-front-three-quarter.png',
+
+  'assets/360/jacket-03-side.png',
+
+  'assets/360/jacket-04-rear-three-quarter.png',
+
+  'assets/360/jacket-05-rear.png',
+
+  'assets/360/jacket-06-side-return.png'
+
+];
+
+
+const spinViewer =
+  document.getElementById('spinViewer');
+
+const spinImage =
+  document.getElementById('spinImage');
+
+const spinHint =
+  document.getElementById('spinHint');
+
+const spinProgress =
+  document.getElementById('spinProgress');
+
+
+let currentFrame = 0;
+
+let dragging = false;
+
+let lastX = 0;
+
+let dragDistance = 0;
+
+
+/* preload all frames */
+
+spinFrames.forEach(src => {
+
+  const image = new Image();
+
+  image.src = src;
+
+});
+
+
+/* display frame */
+
+function showFrame(index){
+
+  currentFrame =
+    (index + spinFrames.length)
+    % spinFrames.length;
+
+  spinImage.src =
+    spinFrames[currentFrame];
+
+  spinProgress.textContent =
+    String(currentFrame + 1).padStart(2,'0')
+    +
+    ' / '
+    +
+    String(spinFrames.length).padStart(2,'0');
+
+}
+
+
+/* begin dragging */
+
+function beginSpin(x){
+
+  dragging = true;
+
+  lastX = x;
+
+  dragDistance = 0;
+
+  spinViewer.classList.add('dragging');
+
+  spinHint.classList.add('used');
+
+}
+
+
+/* rotate while dragging */
+
+function moveSpin(x){
+
+  if(!dragging) return;
+
+  const delta = x - lastX;
+
+  dragDistance += Math.abs(delta);
+
+  /*
+     Smaller number = more sensitive rotation.
+     32 feels good on phones.
+  */
+
+  const threshold = 32;
+
+  if(Math.abs(delta) >= threshold){
+
+    if(delta < 0){
+
+      showFrame(currentFrame + 1);
+
+    }else{
+
+      showFrame(currentFrame - 1);
+
+    }
+
+    lastX = x;
+
+  }
+
+}
+
+
+/* stop dragging */
+
+function endSpin(){
+
+  dragging = false;
+
+  spinViewer.classList.remove('dragging');
+
+}
+
+
+/* pointer / mouse / touchscreen */
+
+spinViewer.addEventListener(
+  'pointerdown',
+  e => {
+
+    /*
+      Don't trigger rotation when the user
+      presses a feature hotspot.
+    */
+
+    if(e.target.closest('.hotspot')) return;
+
+    spinViewer.setPointerCapture(e.pointerId);
+
+    beginSpin(e.clientX);
+
+  }
+);
+
+
+spinViewer.addEventListener(
+  'pointermove',
+  e => {
+
+    moveSpin(e.clientX);
+
+  }
+);
+
+
+spinViewer.addEventListener(
+  'pointerup',
+  endSpin
+);
+
+
+spinViewer.addEventListener(
+  'pointercancel',
+  endSpin
+);
+
+
+/* prevent image dragging */
+
+spinImage.addEventListener(
+  'dragstart',
+  e => e.preventDefault()
+);
+
+
+/* initial frame */
+
+showFrame(0);
+
+</script>
+
+</body>
+</html>

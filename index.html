@@ -13,52 +13,68 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:#030405;color:var(--fg);font-family:Arial,Helvetica,sans-serif}
 body{overflow-x:hidden}
-button{font:inherit}
+button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 a{color:inherit}
 .app{min-height:100svh;background:#030405}
-.screen{min-height:100svh;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-.screen:not(.landing){display:none}
+
+/* IMPORTANT FIX:
+   Every screen is hidden by default.
+   ONLY the active screen is shown. */
+.screen{
+  display:none;
+  min-height:100svh;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
 .screen.active{display:block}
+
 .topbar{position:absolute;z-index:10;top:0;left:0;right:0;padding:var(--safeT) var(--pad) 14px;display:flex;justify-content:space-between;align-items:center}
 .brandmark{width:38px;height:38px;border:1px solid rgba(255,255,255,.35);border-radius:50%;overflow:hidden;background:#090a0a}
 .brandmark img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(1.6)}
-.menu{width:32px;height:26px;border:0;background:transparent;position:relative}
+.menu{width:32px;height:26px;border:0;background:transparent;position:relative;z-index:15}
 .menu:before,.menu:after,.menu span{content:"";position:absolute;right:0;width:30px;height:1px;background:#ddd}
 .menu:before{top:3px}.menu span{top:12px}.menu:after{top:21px}
-.landing{display:block}
+
 .landing .bg,.environment .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.57) contrast(1.06)}
 .landing .bg{background-image:url('assets/tunnel.jpg')}
 .landing .bg:after,.environment .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05),rgba(0,0,0,.12) 48%,rgba(0,0,0,.88) 100%)}
 .landingCopy{position:absolute;left:22px;right:22px;bottom:105px;text-align:center;z-index:4}
 .wordmark{font-size:34px;letter-spacing:.32em;text-indent:.32em;font-weight:400}
 .coords{margin-top:16px;font-size:10px;letter-spacing:.28em;color:#b8b8b8;line-height:1.6}
-.enter{margin-top:30px;border:0;background:none;color:#fff;letter-spacing:.28em;text-transform:uppercase;font-size:11px;padding:16px 4px}
+.enter{position:relative;z-index:20;margin-top:30px;border:0;background:none;color:#fff;letter-spacing:.28em;text-transform:uppercase;font-size:11px;padding:16px 10px}
 .enter:after{content:"";display:block;width:1px;height:48px;background:rgba(255,255,255,.38);margin:18px auto 0}
 .footerstrip{position:absolute;left:0;right:0;bottom:0;height:68px;z-index:5;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px calc(var(--safeB) - 4px);font-size:10px;letter-spacing:.22em;color:#aaa;background:rgba(0,0,0,.56)}
 .recDot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:8px;box-shadow:0 0 12px rgba(225,51,51,.7)}
 
 .productHero{background:#020303}
 .productImage{position:absolute;inset:72px 0 78px;background:#000 url('assets/hero_product.png') center/contain no-repeat}
-.productImage:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.08),transparent 58%,rgba(0,0,0,.82) 100%)}
+.productImage:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.08),transparent 58%,rgba(0,0,0,.82) 100%);pointer-events:none}
 .productMeta{position:absolute;z-index:6;top:92px;left:20px}
 .kicker{font-size:10px;letter-spacing:.22em;color:#aaa;text-transform:uppercase}
 .productMeta h1{font-size:30px;font-weight:400;letter-spacing:.16em;margin:10px 0 4px}
 .productMeta .sub{font-size:12px;letter-spacing:.2em;color:#bbb}
-.hotspot{position:absolute;z-index:8;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.32);display:grid;place-items:center;color:white;font-size:0;backdrop-filter:blur(4px)}
+
+.hotspot{
+  position:absolute;z-index:30;width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.32);
+  display:grid;place-items:center;color:white;font-size:0;backdrop-filter:blur(4px);
+}
 .hotspot:after{content:"+";font-size:16px}
 .hveil{top:23%;right:22%}.hcape{top:42%;left:18%}.hshell{top:57%;right:16%}.hbuild{top:70%;left:22%}
-.label{position:absolute;z-index:8;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#cfcfcf}
+.label{position:absolute;z-index:28;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#cfcfcf;pointer-events:none}
 .lv{top:30%;right:10%}.lc{top:49%;left:9%}.ls{top:64%;right:7%}.lb{top:77%;left:11%}
-.bottomnav{position:absolute;left:0;right:0;bottom:0;height:74px;z-index:12;background:rgba(1,1,1,.82);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr}
+
+.bottomnav{position:absolute;left:0;right:0;bottom:0;height:74px;z-index:40;background:rgba(1,1,1,.82);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr}
 .bottomnav button{border:0;background:none;color:#797c7f;font-size:10px;letter-spacing:.18em;text-transform:uppercase;position:relative}
 .bottomnav .on{color:#fff}
 .bottomnav .on:after{content:"";position:absolute;bottom:0;left:23%;right:23%;height:1px;background:#fff}
 
 .feature{background:#030405}
-.back{position:absolute;z-index:20;top:var(--safeT);left:18px;width:38px;height:38px;border:1px solid rgba(255,255,255,.32);border-radius:50%;background:rgba(0,0,0,.38);color:#fff}
+.back{position:absolute;z-index:50;top:var(--safeT);left:18px;width:38px;height:38px;border:1px solid rgba(255,255,255,.32);border-radius:50%;background:rgba(0,0,0,.38);color:#fff}
 .back:before{content:"←";font-size:17px}
 .featureVisual{height:63svh;background-position:center;background-size:cover;background-repeat:no-repeat;position:relative}
-.featureVisual:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.03),rgba(0,0,0,.12) 55%,#030405 100%)}
+.featureVisual:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.03),rgba(0,0,0,.12) 55%,#030405 100%);pointer-events:none}
 .veil .featureVisual{background-image:url('assets/hero_product.png');background-size:contain;background-color:#000;background-position:center 8px}
 .cape .featureVisual{background-image:url('assets/field_ash.png');background-position:82% center}
 .shell .featureVisual{background-image:url('assets/product_sheet.png');background-position:68% 58%;background-size:220% auto}
@@ -76,6 +92,7 @@ a{color:inherit}
 .veilDiagram div{background:#060707;padding:13px 11px;min-height:82px}
 .veilDiagram b{display:block;font-weight:400;font-size:10px;letter-spacing:.14em;margin-bottom:7px}
 .veilDiagram span{font-size:11px;color:#939699;line-height:1.45}
+
 .environment .bg{background-image:url('assets/field_ash_2.png');background-position:center}
 .environmentCopy{position:absolute;left:22px;right:22px;bottom:110px;z-index:5}
 .environmentCopy h2{font-size:29px;letter-spacing:.08em;font-weight:400;text-transform:uppercase;line-height:1.08}
@@ -93,12 +110,12 @@ a{color:inherit}
     <div class="bg"></div>
     <div class="topbar">
       <div class="brandmark"><img src="assets/logo.png" alt=""></div>
-      <button class="menu"><span></span></button>
+      <button class="menu" type="button"><span></span></button>
     </div>
     <div class="landingCopy">
       <div class="wordmark">LIMMERNSEE</div>
       <div class="coords">46.822° N / 8.993° E<br>SWITZERLAND</div>
-      <button class="enter" onclick="go('system')">Enter the archive</button>
+      <button class="enter" type="button" onclick="go('system')">Enter the archive</button>
     </div>
     <div class="footerstrip"><span>FIELD SYSTEM 001</span><span><i class="recDot"></i>REC</span></div>
   </section>
@@ -106,7 +123,7 @@ a{color:inherit}
   <section id="system" class="screen productHero">
     <div class="topbar">
       <div class="kicker">LIMMERNSEE // FIELD SYSTEM 001</div>
-      <button class="menu"><span></span></button>
+      <button class="menu" type="button"><span></span></button>
     </div>
     <div class="productImage"></div>
     <div class="productMeta">
@@ -114,19 +131,19 @@ a{color:inherit}
       <h1>VEIL SHELL</h1>
       <div class="sub">ASH STONE</div>
     </div>
-    <button class="hotspot hveil" onclick="go('veil')"></button><span class="label lv">Balaclava system</span>
-    <button class="hotspot hcape" onclick="go('cape')"></button><span class="label lc">Storm cape</span>
-    <button class="hotspot hshell" onclick="go('shell')"></button><span class="label ls">20K / 20K shell</span>
-    <button class="hotspot hbuild" onclick="go('build')"></button><span class="label lb">Complete system</span>
+    <button class="hotspot hveil" type="button" onclick="go('veil')" aria-label="Open balaclava system"></button><span class="label lv">Balaclava system</span>
+    <button class="hotspot hcape" type="button" onclick="go('cape')" aria-label="Open storm cape"></button><span class="label lc">Storm cape</span>
+    <button class="hotspot hshell" type="button" onclick="go('shell')" aria-label="Open shell details"></button><span class="label ls">20K / 20K shell</span>
+    <button class="hotspot hbuild" type="button" onclick="go('build')" aria-label="Open complete system"></button><span class="label lb">Complete system</span>
     <nav class="bottomnav">
-      <button class="on">System</button>
-      <button onclick="go('environment')">Environment</button>
-      <button onclick="go('build')">Build</button>
+      <button class="on" type="button">System</button>
+      <button type="button" onclick="go('environment')">Environment</button>
+      <button type="button" onclick="go('build')">Build</button>
     </nav>
   </section>
 
   <section id="veil" class="screen feature veil">
-    <button class="back" onclick="go('system')"></button>
+    <button class="back" type="button" onclick="go('system')" aria-label="Back"></button>
     <div class="featureVisual"></div>
     <div class="copy">
       <div class="num">01 / INTEGRATED BALACLAVA</div>
@@ -143,7 +160,7 @@ a{color:inherit}
   </section>
 
   <section id="cape" class="screen feature cape">
-    <button class="back" onclick="go('system')"></button>
+    <button class="back" type="button" onclick="go('system')" aria-label="Back"></button>
     <div class="featureVisual"></div>
     <div class="copy">
       <div class="num">02 / STORM CAPE</div>
@@ -154,19 +171,19 @@ a{color:inherit}
   </section>
 
   <section id="shell" class="screen feature shell">
-    <button class="back" onclick="go('system')"></button>
+    <button class="back" type="button" onclick="go('system')" aria-label="Back"></button>
     <div class="featureVisual"></div>
     <div class="copy">
       <div class="num">03 / SHELL</div>
       <h2>20K / 20K protection.</h2>
       <p>The production target remains a premium three-layer waterproof shell with a matte, quiet hand feel and premium waterproof hardware.</p>
       <div class="spec">20,000MM+ WATERPROOF<br>20,000G/M²/24HR+ BREATHABLE<br>100% WINDPROOF<br>3-LAYER CONSTRUCTION<br>PREMIUM WATERPROOF ZIPS</div>
-      <button class="enter" style="margin-top:16px" onclick="go('details')">Explore construction</button>
+      <button class="enter" type="button" style="margin-top:16px" onclick="go('details')">Explore construction</button>
     </div>
   </section>
 
   <section id="details" class="screen feature details">
-    <button class="back" onclick="go('shell')"></button>
+    <button class="back" type="button" onclick="go('shell')" aria-label="Back"></button>
     <div class="featureVisual"></div>
     <div class="copy">
       <div class="num">04 / TECHNICAL DETAILS</div>
@@ -177,7 +194,7 @@ a{color:inherit}
   </section>
 
   <section id="build" class="screen feature build">
-    <button class="back" onclick="go('system')"></button>
+    <button class="back" type="button" onclick="go('system')" aria-label="Back"></button>
     <div class="featureVisual"></div>
     <div class="copy">
       <div class="num">05 / BUILD YOUR SYSTEM</div>
@@ -188,9 +205,9 @@ a{color:inherit}
       <div class="note">FIELD SYSTEM 001 // COMING SOON</div>
     </div>
     <nav class="bottomnav">
-      <button onclick="go('system')">System</button>
-      <button onclick="go('environment')">Environment</button>
-      <button class="on">Build</button>
+      <button type="button" onclick="go('system')">System</button>
+      <button type="button" onclick="go('environment')">Environment</button>
+      <button class="on" type="button">Build</button>
     </nav>
   </section>
 
@@ -198,7 +215,7 @@ a{color:inherit}
     <div class="bg"></div>
     <div class="topbar">
       <div class="kicker">LIMMERNSEE // ENVIRONMENT</div>
-      <button class="menu"><span></span></button>
+      <button class="menu" type="button"><span></span></button>
     </div>
     <div class="environmentCopy">
       <div class="kicker">Field System 001</div>
@@ -206,19 +223,24 @@ a{color:inherit}
       <p>The product is shown in the environment it was designed to belong to — weather, rock, water and movement.</p>
     </div>
     <nav class="bottomnav">
-      <button onclick="go('system')">System</button>
-      <button class="on">Environment</button>
-      <button onclick="go('build')">Build</button>
+      <button type="button" onclick="go('system')">System</button>
+      <button class="on" type="button">Environment</button>
+      <button type="button" onclick="go('build')">Build</button>
     </nav>
   </section>
 </div>
 
 <script>
 const screens=[...document.querySelectorAll('.screen')];
+
 function go(id){
-  screens.forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
+  const target=document.getElementById(id);
+  if(!target) return;
+
+  screens.forEach(screen=>screen.classList.remove('active'));
+  target.classList.add('active');
+
+  window.scrollTo({top:0,left:0,behavior:'instant'});
 }
 </script>
 </body>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>LIMMERNSEE // FIELD SYSTEM 001</title>
+<style>
+:root{--bg:#050607;--fg:#f2f0e9;--muted:#8e9194;--line:rgba(255,255,255,.12);--red:#dd2e2e}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+body{min-height:100dvh}.screen{min-height:100dvh;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:max(22px,env(safe-area-inset-top)) 22px max(24px,env(safe-area-inset-bottom));overflow:hidden}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.03);transition:transform 1.4s cubic-bezier(.2,.7,.2,1),filter 1s ease}.screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,.12) 35%,rgba(0,0,0,.8) 78%,#050607 100%);pointer-events:none}
+.top,.hero-copy,.bottom,.feature{position:relative;z-index:2}.top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase}.mark{width:26px;height:26px;border:1px solid rgba(255,255,255,.45);border-radius:50% 50% 45% 45%;position:relative}.mark:after{content:"";position:absolute;left:5px;right:5px;bottom:6px;height:7px;border-left:1px solid white;border-bottom:1px solid white;transform:skewY(-28deg)}.menu{width:22px;height:16px;position:relative}.menu:before,.menu:after{content:"";position:absolute;right:0;width:18px;height:1px;background:#fff}.menu:before{top:3px}.menu:after{bottom:3px}
+.hero-copy{text-align:center;margin-top:auto;margin-bottom:72px}.brand{font-size:26px;letter-spacing:.32em;margin-right:-.32em;font-weight:500}.coords{margin-top:14px;font-size:9px;letter-spacing:.28em;color:#9fa2a4}.micro{font-size:9px;letter-spacing:.28em;color:#9fa2a4;text-transform:uppercase}.enter{margin-top:42px;background:none;border:0;color:#fff;font:inherit;letter-spacing:.28em;font-size:10px;text-transform:uppercase;padding:14px 18px;cursor:pointer}.enter:after{content:"";display:block;width:1px;height:28px;background:rgba(255,255,255,.4);margin:16px auto 0}.bottom{display:flex;justify-content:space-between;align-items:end}.rec{font-size:9px;letter-spacing:.22em;color:#aaa}.dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:7px;box-shadow:0 0 10px rgba(221,46,46,.6)}
+#entry{transition:opacity .65s ease,transform .85s cubic-bezier(.2,.7,.2,1)}#entry.exiting{opacity:0;transform:scale(1.025)}
+#system{display:none}.system-head{padding-top:10vh;text-align:center}.kicker{font-size:9px;letter-spacing:.28em;color:#a8aaab}.title{font-size:14px;letter-spacing:.24em;margin-top:18px}.tagline{font-size:27px;line-height:1.35;letter-spacing:.13em;text-transform:uppercase;margin:42px auto 0;max-width:320px}.explore{margin-top:24px;font-size:9px;letter-spacing:.25em;color:#9fa2a4}.hotspots{position:absolute;inset:0;z-index:3;pointer-events:none}.hotspot{position:absolute;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;font-size:9px;background:rgba(0,0,0,.32);backdrop-filter:blur(4px);pointer-events:auto;cursor:pointer;transition:.25s}.hotspot:hover,.hotspot:active{background:rgba(255,255,255,.12);transform:scale(1.08)}.h1{top:31%;left:54%}.h2{top:40%;right:14%}.h3{top:54%;left:36%}.h4{top:66%;right:20%}
+.navbar{position:absolute;left:0;right:0;bottom:0;z-index:4;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(5,6,7,.78);backdrop-filter:blur(14px);padding-bottom:env(safe-area-inset-bottom)}.navitem{padding:16px 8px 14px;text-align:center;font-size:8px;letter-spacing:.2em;color:#7d8082;text-transform:uppercase}.navitem.active{color:#fff;border-bottom:1px solid #fff}
+.panel{position:fixed;left:12px;right:12px;bottom:14px;z-index:10;background:rgba(10,11,12,.95);border:1px solid var(--line);border-radius:18px;padding:22px;transform:translateY(140%);transition:transform .5s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(18px)}.panel.show{transform:translateY(0)}.panel h3{margin:0 0 8px;font-size:14px;letter-spacing:.16em;text-transform:uppercase}.panel p{margin:0;color:#a5a8aa;font-size:12px;line-height:1.6}.close{position:absolute;right:14px;top:12px;background:none;border:0;color:#fff;font-size:20px}.hint{position:absolute;z-index:2;left:50%;bottom:78px;transform:translateX(-50%);font-size:8px;letter-spacing:.22em;color:#8d9092;text-transform:uppercase;white-space:nowrap}
+@media(min-width:740px){.screen{max-width:430px;margin:0 auto;border-left:1px solid #16181a;border-right:1px solid #16181a}}
+</style>
+</head>
+<body>
+<section id="entry" class="screen">
+  <div class="bg" style="background-image:url('tunnel.jpg')"></div>
+  <div class="top"><div class="mark" aria-label="Limmernsee"></div><div class="menu" aria-hidden="true"></div></div>
+  <div class="hero-copy">
+    <div class="brand">LIMMERNSEE</div>
+    <div class="coords">46.822° N / 8.993° E<br>SWITZERLAND</div>
+    <button class="enter" id="enterBtn">ENTER THE ARCHIVE</button>
+  </div>
+  <div class="bottom"><div class="micro">FIELD SYSTEM 001</div><div class="rec"><span class="dot"></span>REC</div></div>
+</section>
+
+<section id="system" class="screen">
+  <div class="bg" id="systemBg" style="background-image:url('system3.jpg');background-position:center 30%"></div>
+  <div class="top"><div class="micro">LIMMERNSEE // FIELD SYSTEM 001</div><div class="menu"></div></div>
+  <div class="system-head">
+    <div class="kicker">VEIL SHELL // SYSTEM 3</div>
+    <div class="tagline">ENGINEERED<br>FOR THE<br>OTHER SIDE.</div>
+    <div class="explore">TAP A POINT TO EXPLORE</div>
+  </div>
+  <div class="hotspots">
+    <button class="hotspot h1" data-title="Integrated Veil System" data-copy="Rapid face protection built into the hood system. The Veil Shell's defining feature.">01</button>
+    <button class="hotspot h2" data-title="Floating Storm Cape" data-copy="Signature front and rear storm coverage with hidden ventilation beneath the rear cape.">02</button>
+    <button class="hotspot h3" data-title="3-Layer Shell" data-copy="Premium waterproof shell construction targeting 20,000mm+ waterproofing and 20,000g/m²/24hr+ breathability.">03</button>
+    <button class="hotspot h4" data-title="Adjustment System" data-copy="Adjustable hood, cuffs and hem engineered around movement, weather protection and a clean silhouette.">04</button>
+  </div>
+  <div class="hint">DRAG / TAP TO EXPLORE</div>
+  <div class="navbar"><div class="navitem active">System</div><div class="navitem">Environment</div><div class="navitem">Build</div></div>
+</section>
+
+<div class="panel" id="panel"><button class="close" id="closeBtn">×</button><h3 id="panelTitle"></h3><p id="panelCopy"></p></div>
+
+<script>
+const entry=document.getElementById('entry'),system=document.getElementById('system'),btn=document.getElementById('enterBtn'),panel=document.getElementById('panel');
+btn.addEventListener('click',()=>{entry.classList.add('exiting');setTimeout(()=>{entry.style.display='none';system.style.display='flex';requestAnimationFrame(()=>document.getElementById('systemBg').style.transform='scale(1)')},650)});
+document.querySelectorAll('.hotspot').forEach(h=>h.addEventListener('click',()=>{document.getElementById('panelTitle').textContent=h.dataset.title;document.getElementById('panelCopy').textContent=h.dataset.copy;panel.classList.add('show')}));
+document.getElementById('closeBtn').addEventListener('click',()=>panel.classList.remove('show'));
+</script>
+</body>
+</html>

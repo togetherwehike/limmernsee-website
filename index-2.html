@@ -1,0 +1,1890 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030303">
+<title>LIMMERNSEE — Field System 001</title>
+<meta name="description" content="Limmernsee Field System 001. System 3 Veil Shell.">
+
+<style>
+:root{
+  --black:#030303;
+  --softblack:#080808;
+  --white:#f1f0eb;
+  --grey:#8e8e89;
+  --line:rgba(255,255,255,.13);
+  --stone:#c8c0b3;
+}
+
+*{box-sizing:border-box}
+
+html{
+  margin:0;
+  background:var(--black);
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  overflow-x:hidden;
+  background:var(--black);
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;
+  letter-spacing:.02em;
+}
+
+body.nav-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+img,video{display:block;width:100%}
+
+::selection{
+  background:#ddd;
+  color:#000;
+}
+
+/* TYPOGRAPHY */
+
+.micro,
+.eyebrow{
+  font-size:10px;
+  line-height:1.6;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+}
+
+.eyebrow{color:#aaa}
+
+.display{
+  margin:16px 0 0;
+  font-size:clamp(44px,8vw,110px);
+  font-weight:400;
+  line-height:.94;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* HEADER */
+
+.top{
+  position:fixed;
+  z-index:100;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  padding:0 4vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+
+.brand,.menu{pointer-events:auto}
+
+.brand{
+  font-size:11px;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+}
+
+.menu{
+  position:relative;
+  width:44px;
+  height:44px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(12px);
+  color:white;
+}
+
+.menu span,
+.menu:before,
+.menu:after{
+  position:absolute;
+  left:13px;
+  width:16px;
+  height:1px;
+  background:#fff;
+  content:"";
+}
+
+.menu:before{top:15px}
+.menu span{top:21px}
+.menu:after{top:27px}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  z-index:90;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(3,3,3,.97);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .4s ease,visibility .4s ease;
+}
+
+.nav.open{
+  opacity:1;
+  visibility:visible;
+}
+
+.nav-inner{
+  width:min(680px,82vw);
+  display:grid;
+  gap:21px;
+  text-align:center;
+}
+
+.nav-inner small{
+  margin-bottom:22px;
+  color:#666;
+  font-size:9px;
+  letter-spacing:.35em;
+}
+
+.nav-inner a{
+  font-size:clamp(26px,5vw,54px);
+  font-weight:400;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  transition:opacity .2s ease;
+}
+
+.nav-inner a:hover{opacity:.5}
+
+/* ENTRY */
+
+.entry{
+  position:relative;
+  height:100svh;
+  overflow:hidden;
+  background:#000;
+}
+
+.entry-media{
+  position:absolute;
+  inset:0;
+}
+
+.entry-media img,
+.entry-media video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.entry-media img{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.entry-media video{
+  position:absolute;
+  inset:0;
+  z-index:1;
+}
+
+.entry-media:after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 40%,transparent 0,rgba(0,0,0,.08) 42%,rgba(0,0,0,.68) 100%),
+    linear-gradient(to bottom,rgba(0,0,0,.05),rgba(0,0,0,.12) 50%,rgba(0,0,0,.92));
+}
+
+.entry-copy{
+  position:absolute;
+  z-index:4;
+  left:7vw;
+  right:7vw;
+  bottom:8vh;
+  text-align:center;
+  transition:opacity .4s ease,transform .4s ease;
+}
+
+.entry-title{
+  margin:16px 0 12px;
+  font-size:clamp(42px,9vw,100px);
+  font-weight:400;
+  letter-spacing:.25em;
+  text-indent:.25em;
+}
+
+.entry-coords{
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:.28em;
+  line-height:1.7;
+}
+
+.enter{
+  display:inline-block;
+  margin-top:30px;
+  padding:14px 4px;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.55);
+  background:none;
+  color:white;
+  font-size:10px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+}
+
+.entry-status{
+  position:absolute;
+  z-index:4;
+  left:4vw;
+  right:4vw;
+  bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  color:#777;
+  font-size:8px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  transition:opacity .4s ease;
+}
+
+.rec{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  margin-right:7px;
+  border-radius:50%;
+  background:#d43131;
+  box-shadow:0 0 10px #d43131;
+}
+
+/* LANDSCAPE */
+
+.reveal-landscape{
+  position:relative;
+  min-height:110svh;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+}
+
+.reveal-landscape .image{
+  position:absolute;
+  inset:-5%;
+  background:url('assets/07-environment.png') center/cover no-repeat;
+  transform:scale(1.07);
+  transition:transform 4s cubic-bezier(.18,.75,.25,1);
+}
+
+.reveal-landscape.visible .image{transform:scale(1)}
+
+.reveal-landscape:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.15) 50%,#030303 100%);
+}
+
+.reveal-copy{
+  position:relative;
+  z-index:4;
+  width:100%;
+  padding:0 6vw 11vh;
+}
+
+.reveal-copy .display{max-width:800px}
+
+/* INTERLUDE */
+
+.interlude{
+  min-height:78svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:90px 6vw;
+  text-align:center;
+  background:#030303;
+}
+
+.interlude-inner{max-width:950px}
+
+.interlude-title{
+  margin:18px 0;
+  font-size:clamp(37px,7vw,90px);
+  font-weight:400;
+  line-height:1.05;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.interlude-copy{
+  max-width:520px;
+  margin:25px auto 0;
+  color:#777;
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* PRODUCT */
+
+.product-chapter{
+  position:relative;
+  overflow:hidden;
+  padding:110px 4vw 120px;
+  background:#000;
+}
+
+.product-chapter:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,255,255,.035),transparent 34%),
+    linear-gradient(to bottom,#000 0%,rgba(0,0,0,.96) 58%,#000 100%);
+  opacity:1;
+  transition:opacity 1.4s ease;
+}
+
+.product-heading{
+  position:relative;
+  z-index:5;
+  width:min(1250px,100%);
+  margin:0 auto 35px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  opacity:0;
+  transform:translateY(28px);
+}
+
+.product-heading .right{
+  max-width:380px;
+  color:#777;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.product-title{
+  margin:12px 0 0;
+  font-size:clamp(43px,7vw,84px);
+  font-weight:400;
+  letter-spacing:.1em;
+}
+
+.product-stage{
+  position:relative;
+  width:min(1050px,100%);
+  min-height:78svh;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#000;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+  opacity:0;
+  transform:scale(.965) translateY(20px);
+}
+
+.product-chapter.system-active .product-heading{
+  animation:systemCopyIn .9s .15s forwards cubic-bezier(.2,.7,.2,1);
+}
+
+.product-chapter.system-active .product-stage{
+  animation:systemStageIn 1.25s .35s forwards cubic-bezier(.16,.75,.2,1);
+}
+
+.product-chapter.system-active:before{opacity:.28}
+
+.spin-image{
+  width:100%;
+  height:78svh;
+  max-height:900px;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+  opacity:1;
+  filter:none;
+  transform:scale(1);
+  transition:transform .25s ease,opacity .08s linear;
+}
+
+.product-chapter.system-active .spin-image{
+  animation:jacketWake 1.25s .55s both cubic-bezier(.18,.7,.2,1);
+}
+
+.product-stage:after{
+  content:"";
+  position:absolute;
+  z-index:8;
+  left:10%;
+  right:10%;
+  top:13%;
+  height:1px;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  box-shadow:0 0 18px rgba(255,255,255,.25);
+}
+
+.product-chapter.system-active .product-stage:after{
+  animation:scanLine 1.25s 1.05s ease-out forwards;
+}
+
+.product-chapter.system-active .hotspot{animation:hotspotIn .55s both}
+.product-chapter.system-active .h1{animation-delay:1.55s}
+.product-chapter.system-active .h2{animation-delay:1.68s}
+.product-chapter.system-active .h3{animation-delay:1.81s}
+.product-chapter.system-active .spin-ui{animation:uiIn .7s 1.9s both}
+
+@keyframes systemCopyIn{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes systemStageIn{
+  from{opacity:0;transform:scale(.965) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+@keyframes jacketWake{
+  0%{opacity:.15;filter:brightness(.25);transform:scale(.985)}
+  100%{opacity:1;filter:brightness(1);transform:scale(1)}
+}
+
+@keyframes scanLine{
+  0%{top:13%;opacity:0}
+  15%{opacity:.9}
+  80%{opacity:.55}
+  100%{top:83%;opacity:0}
+}
+
+@keyframes hotspotIn{
+  from{opacity:0;transform:scale(.7)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes uiIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+.product-stage.dragging{cursor:grabbing}
+
+.product-stage:before{
+  content:"";
+  position:absolute;
+  z-index:3;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 48%,transparent 35%,rgba(0,0,0,.56) 90%);
+}
+
+.product-chapter.system-active .product-stage:hover .spin-image{transform:scale(1.015)}
+
+.spin-ui{
+  position:absolute;
+  z-index:15;
+  left:24px;
+  right:24px;
+  bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+
+.rotate{
+  padding:11px 16px;
+  border:1px solid #333;
+  border-radius:100px;
+  background:rgba(0,0,0,.5);
+  color:#aaa;
+  font-size:8px;
+  letter-spacing:.27em;
+  transition:opacity .45s ease,transform .45s ease;
+}
+
+.rotate.used{
+  opacity:0;
+  transform:translateY(7px);
+}
+
+.spin-progress{
+  color:#666;
+  font-size:8px;
+  letter-spacing:.25em;
+}
+
+.hotspot{
+  position:absolute;
+  z-index:20;
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.52);
+  border-radius:50%;
+  background:rgba(0,0,0,.58);
+  color:#fff;
+  font-size:9px;
+  letter-spacing:.06em;
+  backdrop-filter:blur(7px);
+  transition:transform .25s ease,background .25s ease;
+}
+
+.hotspot:hover{
+  transform:scale(1.1);
+  background:#161616;
+}
+
+.h1{top:23%;right:30%}
+.h2{top:44%;left:24%}
+.h3{top:59%;right:23%}
+
+/* HOTSPOT CINEMATIC TRANSITION */
+
+.product-transition{
+  position:fixed;
+  z-index:140;
+  inset:0;
+  pointer-events:none;
+  background:#000;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .38s ease,visibility .38s ease;
+}
+
+.product-transition.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.product-transition .scan{
+  position:absolute;
+  left:8%;
+  right:8%;
+  top:50%;
+  height:1px;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+  box-shadow:0 0 22px rgba(255,255,255,.28);
+}
+
+.product-transition.active .scan{
+  animation:transitionScan .72s ease forwards;
+}
+
+.product-stage.focus-veil .spin-image{transform:scale(1.12) translateY(2%)}
+.product-stage.focus-cape .spin-image{transform:scale(1.08) translate(-5%,2%)}
+.product-stage.focus-shell .spin-image{transform:scale(1.1) translate(4%,5%)}
+
+.product-stage.focus-veil .hotspot:not(.h1),
+.product-stage.focus-cape .hotspot:not(.h2),
+.product-stage.focus-shell .hotspot:not(.h3){opacity:.12}
+
+.product-stage.focus-veil .h1,
+.product-stage.focus-cape .h2,
+.product-stage.focus-shell .h3{
+  transform:scale(1.2);
+  background:#fff;
+  color:#000;
+}
+
+@keyframes transitionScan{
+  0%{top:35%;opacity:0}
+  15%{opacity:1}
+  80%{opacity:.8}
+  100%{top:68%;opacity:0}
+}
+
+/* FEATURES */
+
+.feature-chapter{
+  position:relative;
+  min-height:110svh;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+  background:#050505;
+  isolation:isolate;
+}
+
+.feature-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.04);
+  transition:transform .18s linear,filter .18s linear,opacity .18s linear;
+  will-change:transform,filter,opacity;
+}
+
+.feature-chapter.visible .feature-bg{transform:scale(1)}
+
+.feature-chapter:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.06),rgba(0,0,0,.16) 50%,rgba(0,0,0,.96) 100%);
+}
+
+.feature-content{
+  position:relative;
+  z-index:5;
+  width:100%;
+  padding:0 6vw 9vh;
+  will-change:transform,opacity;
+  transition:transform .18s linear,opacity .18s linear;
+}
+
+.feature-content .display{max-width:900px}
+
+.feature-text{
+  max-width:450px;
+  margin-top:24px;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.75;
+}
+
+.feature-meta{
+  margin-top:28px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:11px 30px;
+  color:#777;
+  font-size:9px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+.chapter-progress{
+  position:absolute;
+  z-index:7;
+  top:50%;
+  right:28px;
+  transform:translateY(-50%);
+  display:grid;
+  gap:8px;
+  color:rgba(255,255,255,.35);
+  font-size:8px;
+  letter-spacing:.22em;
+  writing-mode:vertical-rl;
+  text-transform:uppercase;
+  pointer-events:none;
+}
+
+.chapter-progress:before{
+  content:"";
+  width:1px;
+  height:58px;
+  margin:0 auto 5px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.55),rgba(255,255,255,.08));
+}
+
+#balaclava .feature-bg{object-position:center 36%;transform-origin:50% 34%}
+#cape .feature-bg{transform-origin:50% 48%}
+#shell .feature-bg{transform-origin:54% 54%}
+
+/* COMPLETE */
+
+.complete{
+  position:relative;
+  min-height:120svh;
+  overflow:hidden;
+  background:#000;
+}
+
+.complete img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.complete:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.14) 45%,rgba(0,0,0,.92) 95%);
+}
+
+.complete-copy{
+  position:absolute;
+  z-index:3;
+  left:6vw;
+  bottom:9vh;
+}
+
+.complete-copy .display{max-width:820px}
+
+/* FIELD FILM */
+
+.field-film{
+  position:relative;
+  min-height:110svh;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  align-items:flex-end;
+}
+
+.field-poster,
+.field-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.field-poster{z-index:0}
+.field-video{
+  z-index:1;
+  opacity:0;
+  transition:opacity 1.1s ease;
+}
+.field-film.playing .field-video{opacity:1}
+
+.field-shade{
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.12) 48%,rgba(0,0,0,.82) 100%);
+}
+
+.field-copy{
+  position:absolute;
+  z-index:3;
+  left:6vw;
+  right:6vw;
+  bottom:8vh;
+}
+
+.field-copy .display{max-width:900px}
+
+.field-coords{
+  margin-top:24px;
+  color:#777;
+  font-size:9px;
+  line-height:1.7;
+  letter-spacing:.28em;
+}
+
+/* ARCHIVE */
+
+.archive{
+  position:relative;
+  padding:130px 4vw;
+  background:#050505;
+}
+
+.archive-heading{
+  width:min(1300px,100%);
+  margin:0 auto 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:40px;
+}
+
+.archive-heading p{
+  max-width:420px;
+  color:#777;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.archive-image{
+  width:min(1600px,100%);
+  margin:auto;
+  border:1px solid #171717;
+  background:#000;
+}
+
+/* ACCESS */
+
+.access{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:100px 6vw;
+  overflow:hidden;
+  text-align:center;
+}
+
+.access:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.92)),
+    url('assets/07-environment.png') center/cover;
+  filter:grayscale(.4);
+}
+
+.access-inner{
+  position:relative;
+  z-index:3;
+  width:min(720px,100%);
+}
+
+.access h2{
+  margin:18px 0;
+  font-size:clamp(48px,8vw,100px);
+  font-weight:400;
+  line-height:.95;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.access p{
+  max-width:470px;
+  margin:25px auto;
+  color:#999;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.form{
+  width:min(560px,100%);
+  margin:45px auto 0;
+  display:flex;
+  border-bottom:1px solid #777;
+}
+
+.form input{
+  flex:1;
+  min-width:0;
+  padding:18px 4px;
+  border:0;
+  outline:0;
+  background:none;
+  color:white;
+}
+
+.form button{
+  border:0;
+  background:none;
+  color:white;
+  font-size:9px;
+  letter-spacing:.25em;
+}
+
+/* FOOTER */
+
+.footer{
+  padding:28px 4vw 40px;
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid var(--line);
+  color:#555;
+  font-size:8px;
+  letter-spacing:.25em;
+}
+
+/* REVEALS */
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .95s ease,transform .95s ease;
+}
+
+.reveal.in{
+  opacity:1;
+  transform:none;
+}
+
+/* FINAL POLISH */
+
+.top{
+  transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;
+  border-bottom:1px solid transparent;
+}
+
+.top.scrolled{
+  background:rgba(3,3,3,.72);
+  border-bottom-color:rgba(255,255,255,.07);
+  backdrop-filter:blur(14px);
+}
+
+.menu:before,.menu:after,.menu span{
+  transition:transform .3s ease,opacity .2s ease,top .3s ease;
+}
+
+body.nav-open .menu:before{top:21px;transform:rotate(45deg)}
+body.nav-open .menu:after{top:21px;transform:rotate(-45deg)}
+body.nav-open .menu span{opacity:0}
+
+.nav-inner a.active{opacity:.42}
+
+.feature-chapter:before,.complete:before,.archive:before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  left:0;
+  right:0;
+  top:0;
+  height:14vh;
+  pointer-events:none;
+  background:linear-gradient(#030303,transparent);
+}
+
+.form input::placeholder{color:#666;letter-spacing:.12em;font-size:10px}
+.form button{transition:opacity .2s ease,transform .2s ease}
+.form button:hover{opacity:.6;transform:translateX(3px)}
+.form:focus-within{border-bottom-color:#eee}
+
+/* WATERMARK */
+
+.brand-watermark{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-watermark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .top{height:62px;padding:0 20px}
+  .brand-watermark{width:40px;height:40px}
+  .menu{width:40px;height:40px}
+
+  .entry-title{
+    font-size:40px;
+    letter-spacing:.17em;
+    text-indent:.17em;
+  }
+
+  .entry-copy{
+    left:20px;
+    right:20px;
+    bottom:12vh;
+  }
+
+  .entry-status{
+    left:20px;
+    right:20px;
+    bottom:18px;
+  }
+
+  .display{font-size:42px;letter-spacing:.06em}
+  .reveal-copy{padding:0 24px 9vh}
+
+  .interlude{
+    min-height:72svh;
+    padding:90px 24px;
+  }
+
+  .interlude-title{font-size:40px}
+
+  .product-chapter{padding:90px 0 100px}
+
+  .product-heading{
+    padding:0 24px;
+    display:block;
+  }
+
+  .product-heading .right{margin-top:20px}
+  .product-title{font-size:44px}
+
+  .product-stage{
+    min-height:72svh;
+    width:100%;
+  }
+
+  .spin-image{
+    height:68svh;
+    max-width:100%;
+  }
+
+  .hotspot{width:38px;height:38px}
+  .h1{top:22%;right:19%}
+  .h2{top:43%;left:14%}
+  .h3{top:61%;right:12%}
+
+  .spin-ui{left:17px;right:17px}
+
+  .feature-chapter{min-height:100svh}
+  .feature-content{padding:0 24px 8vh}
+  .feature-text{font-size:12px}
+  .feature-meta{gap:9px 18px;line-height:1.6}
+
+  .chapter-progress{
+    right:10px;
+    font-size:7px;
+  }
+
+  .chapter-progress:before{height:40px}
+
+  .complete{min-height:105svh}
+
+  .complete-copy{
+    left:24px;
+    right:24px;
+    bottom:8vh;
+  }
+
+  .field-film{min-height:100svh}
+
+  .field-copy{
+    left:24px;
+    right:24px;
+    bottom:8vh;
+  }
+
+  .archive{padding:100px 0}
+
+  .archive-heading{
+    padding:0 24px;
+    display:block;
+  }
+
+  .archive-heading p{margin-top:22px}
+
+  .archive-image{
+    border-left:0;
+    border-right:0;
+  }
+
+  .access{padding:100px 24px}
+
+  .form{display:grid}
+  .form button{padding:16px 0}
+
+  .footer{
+    padding:28px 22px 38px;
+    display:grid;
+    gap:10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    scroll-behavior:auto !important;
+    animation:none !important;
+    transition:none !important;
+  }
+
+  .product-heading,
+  .product-stage,
+  .spin-image,
+  .hotspot,
+  .spin-ui{
+    opacity:1 !important;
+    transform:none !important;
+    filter:none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+  <a class="brand brand-watermark" href="#top" aria-label="Limmernsee home">
+    <img src="assets/limmernsee-watermark.png" alt="Limmernsee">
+  </a>
+  <button class="menu" aria-label="Open navigation"><span></span></button>
+</header>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <small>FIELD SYSTEM 001</small>
+    <a href="#system">SYSTEM 3</a>
+    <a href="#balaclava">INTEGRATED VEIL</a>
+    <a href="#cape">STORM CAPE</a>
+    <a href="#shell">20K / 20K</a>
+    <a href="#complete">FIELD SYSTEM</a>
+    <a href="#fieldFilm">FIELD DEPLOYMENT</a>
+    <a href="#construction">ARCHIVE</a>
+    <a href="#register">FIELD ACCESS</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<section class="entry" id="entry">
+  <div class="entry-media">
+    <img
+      src="assets/01-tunnel-hero.png"
+      alt="Limmernsee alpine tunnel"
+    >
+
+    <video
+      id="entryVideo"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="assets/01-tunnel-hero.png"
+    >
+      <source
+        src="assets/Limmernsee-entry.mp4"
+        type="video/mp4"
+      >
+    </video>
+  </div>
+
+  <div class="entry-copy">
+    <div class="micro">FIELD SYSTEM 001</div>
+    <h1 class="entry-title">LIMMERNSEE</h1>
+
+    <div class="entry-coords">
+      46.822° N / 8.993° E<br>
+      SWITZERLAND
+    </div>
+
+    <button class="enter" id="enterArchive">
+      ENTER THE FIELD ↓
+    </button>
+  </div>
+
+  <div class="entry-status">
+    <span>SYSTEM 3</span>
+    <span><i class="rec"></i>FIELD RECORD</span>
+  </div>
+</section>
+
+<section class="reveal-landscape observe" id="location">
+  <div class="image"></div>
+
+  <div class="reveal-copy reveal">
+    <div class="eyebrow">46.822° N / 8.993° E</div>
+
+    <h2 class="display">
+      BUILT FROM<br>
+      THE FIELD.
+    </h2>
+  </div>
+</section>
+
+<section class="interlude">
+  <div class="interlude-inner reveal">
+    <div class="eyebrow">FIELD SYSTEM 001</div>
+
+    <h2 class="interlude-title">
+      ONE SHELL.<br>
+      MULTIPLE STATES.
+    </h2>
+
+    <p class="interlude-copy">
+      Protection should appear only when required.
+      System 3 is designed around adaptable layers,
+      hidden structure and a silhouette that changes
+      with the environment.
+    </p>
+  </div>
+</section>
+
+<section class="product-chapter" id="system">
+
+  <div class="product-heading">
+
+    <div>
+      <div class="eyebrow">01 // SYSTEM 3</div>
+      <h2 class="product-title">VEIL SHELL</h2>
+      <div class="eyebrow">ASH STONE</div>
+    </div>
+
+    <div class="right">
+      Rotate the shell to inspect the system.
+      Select a numbered point to move deeper
+      into its construction.
+    </div>
+
+  </div>
+
+  <div
+    class="product-stage"
+    id="spinViewer"
+    aria-label="Drag left or right to rotate the Limmernsee Veil Shell"
+  >
+
+    <img
+      class="spin-image"
+      id="spinImage"
+      src="assets/360/jacket-01-front.png"
+      alt="Limmernsee System 3 Veil Shell 360 product view"
+      draggable="false"
+    >
+
+    <button class="hotspot h1" aria-label="Integrated veil">01</button>
+    <button class="hotspot h2" aria-label="Storm cape">02</button>
+    <button class="hotspot h3" aria-label="20K shell">03</button>
+
+    <div class="spin-ui">
+      <div class="rotate" id="spinHint">↔ DRAG TO EXPLORE</div>
+      <div class="spin-progress" id="spinProgress">01 / 06</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="feature-chapter observe" id="balaclava">
+  <div class="chapter-progress">02 / 06</div>
+
+  <img
+    class="feature-bg"
+    src="assets/03-integrated-balaclava.png"
+    alt="Limmernsee integrated balaclava"
+  >
+
+  <div class="feature-content reveal">
+    <div class="eyebrow">02 // FACE PROTECTION</div>
+
+    <h2 class="display">
+      HIDDEN<br>
+      UNTIL NEEDED.
+    </h2>
+
+    <p class="feature-text">
+      Integrated lower-face protection sits within
+      the hood and raised collar architecture.
+      The eye area remains completely open while
+      the lower face becomes part of the shell.
+    </p>
+
+    <div class="feature-meta">
+      <span>INTEGRATED SYSTEM</span>
+      <span>OPEN EYE AREA</span>
+      <span>TUCKED CONSTRUCTION</span>
+    </div>
+  </div>
+</section>
+
+<section class="feature-chapter observe" id="cape">
+  <div class="chapter-progress">03 / 06</div>
+
+  <img
+    class="feature-bg"
+    src="assets/04-storm-cape.png"
+    alt="Limmernsee Storm Cape"
+  >
+
+  <div class="feature-content reveal">
+    <div class="eyebrow">03 // STORM ARCHITECTURE</div>
+
+    <h2 class="display">
+      WEATHER<br>
+      HAS LAYERS.
+    </h2>
+
+    <p class="feature-text">
+      The floating cape creates the defining
+      System 3 silhouette while shielding the
+      upper body and allowing concealed airflow.
+    </p>
+
+    <div class="feature-meta">
+      <span>FRONT STORM LAYER</span>
+      <span>REAR FLOATING CAPE</span>
+      <span>HIDDEN AIRFLOW</span>
+    </div>
+  </div>
+</section>
+
+<section class="feature-chapter observe" id="shell">
+  <div class="chapter-progress">04 / 06</div>
+
+  <img
+    class="feature-bg"
+    src="assets/05-20k-shell.png"
+    alt="Limmernsee waterproof technical shell"
+  >
+
+  <div class="feature-content reveal">
+    <div class="eyebrow">04 // SHELL</div>
+
+    <h2 class="display">20K / 20K</h2>
+
+    <p class="feature-text">
+      Three-layer weather protection built around
+      waterproof construction, breathable performance
+      and premium technical hardware.
+    </p>
+
+    <div class="feature-meta">
+      <span>20,000MM+ WATERPROOF</span>
+      <span>20,000G/M²/24HR+</span>
+      <span>WINDPROOF</span>
+      <span>3-LAYER</span>
+    </div>
+  </div>
+</section>
+
+<section class="interlude">
+  <div class="interlude-inner reveal">
+    <div class="eyebrow">SYSTEM 3</div>
+
+    <h2 class="interlude-title">
+      BUILT AS<br>
+      EQUIPMENT.
+    </h2>
+  </div>
+</section>
+
+<section class="complete observe" id="complete">
+
+  <img
+    src="assets/06-complete-system.png"
+    alt="Limmernsee complete Veil Shell and Field Cargo system"
+  >
+
+  <div class="complete-copy reveal">
+    <div class="eyebrow">05 // COMPLETE SYSTEM</div>
+
+    <h2 class="display">
+      VEIL SHELL<br>
+      + FIELD CARGO
+    </h2>
+
+    <div class="feature-meta">
+      <span>UNISEX</span>
+      <span>ADAPTIVE LAYERING</span>
+      <span>OVERSIZED UTILITY</span>
+    </div>
+  </div>
+</section>
+
+<section class="field-film observe" id="fieldFilm">
+
+  <img
+    class="field-poster"
+    src="assets/07-environment.png"
+    alt="Limmernsee alpine field environment"
+  >
+
+  <video
+    class="field-video"
+    id="fieldVideo"
+    muted
+    playsinline
+    loop
+    preload="metadata"
+    poster="assets/07-environment.png"
+  >
+    <source
+      src="assets/Limmernsee-field.mp4"
+      type="video/mp4"
+    >
+  </video>
+
+  <div class="field-shade"></div>
+
+  <div class="field-copy reveal">
+    <div class="eyebrow">FIELD DEPLOYMENT</div>
+
+    <h2 class="display">
+      DESIGNED<br>
+      TO DISAPPEAR.
+    </h2>
+
+    <div class="field-coords">
+      46.822° N / 8.993° E<br>
+      LIMMERNSEE // SWITZERLAND
+    </div>
+  </div>
+</section>
+
+<section class="archive" id="construction">
+
+  <div class="archive-heading reveal">
+
+    <div>
+      <div class="eyebrow">06 // TECHNICAL ARCHIVE</div>
+
+      <h2 class="display">
+        ENGINEERED<br>
+        AS A SYSTEM.
+      </h2>
+    </div>
+
+    <p>
+      Hood architecture. Integrated face protection.
+      Storm layers. Waterproof hardware. Adjustment.
+      Ventilation. Utility.
+
+      System 3 is designed as a single piece of
+      adaptable equipment.
+    </p>
+  </div>
+
+  <img
+    class="archive-image reveal"
+    src="assets/08-technical-construction.png"
+    alt="Limmernsee System 3 technical construction"
+  >
+</section>
+
+<section class="access" id="register">
+
+  <div class="access-inner">
+    <div class="eyebrow reveal">FIELD SYSTEM 001</div>
+
+    <h2 class="reveal">
+      ENTER<br>
+      THE FIELD.
+    </h2>
+
+    <p class="reveal">
+      Register for development updates,
+      production progress and first access
+      to System 3.
+    </p>
+
+    <form
+      class="form reveal"
+      onsubmit="
+        event.preventDefault();
+        this.innerHTML=
+        '<div style=&quot;padding:20px 4px;width:100%;font-size:10px;letter-spacing:.25em;text-align:center&quot;>FIELD ACCESS REGISTERED</div>'
+      "
+    >
+      <input
+        type="email"
+        required
+        placeholder="EMAIL ADDRESS"
+        aria-label="Email address"
+      >
+
+      <button>REQUEST ACCESS →</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<div class="product-transition" id="productTransition" aria-hidden="true">
+  <div class="scan"></div>
+</div>
+
+<footer class="footer">
+  <span>LIMMERNSEE</span>
+  <span>FIELD SYSTEM 001</span>
+  <span>46.822° N / 8.993° E</span>
+</footer>
+
+<script>
+
+/* NAV */
+
+const menu=document.querySelector('.menu');
+const nav=document.querySelector('.nav');
+
+menu.addEventListener('click',()=>{
+  nav.classList.toggle('open');
+  document.body.classList.toggle('nav-open');
+});
+
+nav.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    nav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  });
+});
+
+/* REVEALS */
+
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* SCENE MOVEMENT */
+
+const sceneObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:.2});
+
+document.querySelectorAll('.observe').forEach(el=>sceneObserver.observe(el));
+
+/* ENTRY HERO — AMBIENT VIDEO ONLY */
+
+const entryVideo=document.getElementById('entryVideo');
+const enterButton=document.getElementById('enterArchive');
+
+function startEntryVideo(){
+  if(!entryVideo)return;
+
+  entryVideo.muted=true;
+  entryVideo.defaultMuted=true;
+  entryVideo.loop=true;
+  entryVideo.playsInline=true;
+
+  const playPromise=entryVideo.play();
+
+  if(playPromise && typeof playPromise.catch==='function'){
+    playPromise.catch(()=>{
+      /*
+        If autoplay is blocked by a browser/device setting,
+        the poster remains visible. The ENTER button is
+        intentionally never used to start the video.
+      */
+    });
+  }
+}
+
+if(entryVideo){
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',startEntryVideo,{once:true});
+  }else{
+    startEntryVideo();
+  }
+
+  entryVideo.addEventListener('loadedmetadata',startEntryVideo,{once:true});
+  entryVideo.addEventListener('canplay',startEntryVideo,{once:true});
+
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
+      entryVideo.pause();
+    }else{
+      startEntryVideo();
+    }
+  });
+}
+
+if(enterButton){
+  enterButton.addEventListener('click',()=>{
+    document.getElementById('location').scrollIntoView({behavior:'smooth'});
+  });
+}
+
+/* SYSTEM 3 REVEAL — THIS WAS MISSING */
+
+const systemChapter=document.getElementById('system');
+
+if(systemChapter){
+  const systemObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        systemChapter.classList.add('system-active');
+        systemObserver.disconnect();
+      }
+    });
+  },{
+    threshold:.18
+  });
+
+  systemObserver.observe(systemChapter);
+}
+
+/* 360 VIEWER */
+
+const spinFrames=[
+  'assets/360/jacket-01-front.png',
+  'assets/360/jacket-02-front-three-quarter.png',
+  'assets/360/jacket-03-side.png',
+  'assets/360/jacket-04-rear-three-quarter.png',
+  'assets/360/jacket-05-rear.png',
+  'assets/360/jacket-06-side-return.png'
+];
+
+const spinViewer=document.getElementById('spinViewer');
+const spinImage=document.getElementById('spinImage');
+const spinHint=document.getElementById('spinHint');
+const spinProgress=document.getElementById('spinProgress');
+
+let currentFrame=0;
+let dragging=false;
+let lastX=0;
+
+/* preload with safe fallback */
+spinFrames.forEach(src=>{
+  const image=new Image();
+  image.src=src;
+});
+
+function showFrame(index){
+  currentFrame=(index+spinFrames.length)%spinFrames.length;
+  const target=spinFrames[currentFrame];
+
+  spinImage.onerror=()=>{
+    spinImage.onerror=null;
+    spinImage.src='assets/360/jacket-01-front.png';
+    currentFrame=0;
+    spinProgress.textContent='01 / 06';
+  };
+
+  spinImage.src=target;
+
+  spinProgress.textContent=
+    String(currentFrame+1).padStart(2,'0')+
+    ' / '+
+    String(spinFrames.length).padStart(2,'0');
+}
+
+function beginSpin(x){
+  dragging=true;
+  lastX=x;
+  spinViewer.classList.add('dragging');
+  spinHint.classList.add('used');
+}
+
+function moveSpin(x){
+  if(!dragging)return;
+
+  const delta=x-lastX;
+  const threshold=27;
+
+  if(Math.abs(delta)>=threshold){
+    showFrame(delta<0 ? currentFrame+1 : currentFrame-1);
+    lastX=x;
+  }
+}
+
+function endSpin(){
+  dragging=false;
+  spinViewer.classList.remove('dragging');
+}
+
+spinViewer.addEventListener('pointerdown',event=>{
+  if(event.target.closest('.hotspot'))return;
+  spinViewer.setPointerCapture(event.pointerId);
+  beginSpin(event.clientX);
+});
+
+spinViewer.addEventListener('pointermove',event=>moveSpin(event.clientX));
+spinViewer.addEventListener('pointerup',endSpin);
+spinViewer.addEventListener('pointercancel',endSpin);
+
+spinImage.addEventListener('dragstart',event=>event.preventDefault());
+
+showFrame(0);
+
+/* HOTSPOT CINEMATIC TRANSITIONS */
+
+const productTransition=document.getElementById('productTransition');
+
+function goToFeature(targetId,focusClass){
+
+  spinViewer.classList.remove('focus-veil','focus-cape','focus-shell');
+  spinViewer.classList.add(focusClass);
+
+  setTimeout(()=>productTransition.classList.add('active'),180);
+
+  setTimeout(()=>{
+    document.getElementById(targetId).scrollIntoView({behavior:'auto'});
+  },500);
+
+  setTimeout(()=>{
+    productTransition.classList.remove('active');
+    spinViewer.classList.remove('focus-veil','focus-cape','focus-shell');
+  },860);
+}
+
+document.querySelector('.h1').addEventListener('click',event=>{
+  event.stopPropagation();
+  goToFeature('balaclava','focus-veil');
+});
+
+document.querySelector('.h2').addEventListener('click',event=>{
+  event.stopPropagation();
+  goToFeature('cape','focus-cape');
+});
+
+document.querySelector('.h3').addEventListener('click',event=>{
+  event.stopPropagation();
+  goToFeature('shell','focus-shell');
+});
+
+/* FIELD FILM */
+
+const fieldVideo=document.getElementById('fieldVideo');
+const fieldFilm=document.getElementById('fieldFilm');
+
+if(fieldVideo && fieldFilm){
+
+  fieldVideo.muted=true;
+  fieldVideo.defaultMuted=true;
+  fieldVideo.loop=true;
+  fieldVideo.playsInline=true;
+
+  const fieldFilmObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        fieldVideo.play().catch(()=>{});
+        fieldFilm.classList.add('playing');
+      }else{
+        fieldVideo.pause();
+        fieldFilm.classList.remove('playing');
+      }
+    });
+  },{threshold:.3});
+
+  fieldFilmObserver.observe(fieldFilm);
+}
+
+/* PARALLAX */
+
+let ticking=false;
+
+window.addEventListener('scroll',()=>{
+
+  if(ticking)return;
+  ticking=true;
+
+  requestAnimationFrame(()=>{
+
+    document.querySelectorAll('.reveal-landscape .image').forEach(image=>{
+
+      const rect=image.parentElement.getBoundingClientRect();
+
+      if(rect.bottom>0 && rect.top<window.innerHeight){
+        image.style.translate=`0 ${rect.top*-.025}px`;
+      }
+    });
+
+    ticking=false;
+  });
+
+},{passive:true});
+
+/* CONTINUOUS FEATURE MOTION */
+
+const featureChapters=[...document.querySelectorAll('.feature-chapter')];
+
+function updateFeatureJourney(){
+
+  const vh=window.innerHeight;
+
+  featureChapters.forEach(section=>{
+
+    const rect=section.getBoundingClientRect();
+    const progress=Math.max(0,Math.min(1,(vh-rect.top)/(vh+rect.height)));
+    const image=section.querySelector('.feature-bg');
+    const content=section.querySelector('.feature-content');
+
+    if(!image||!content)return;
+
+    const zoom=1.035+progress*.055;
+    const lift=(progress-.5)*-18;
+
+    image.style.transform=`scale(${zoom}) translateY(${lift}px)`;
+    image.style.filter=`brightness(${0.82+Math.sin(progress*Math.PI)*0.18})`;
+
+    let copyOpacity=1;
+
+    if(progress<.16){
+      copyOpacity=progress/.16;
+    }else if(progress>.78){
+      copyOpacity=Math.max(0,(1-progress)/.22);
+    }
+
+    content.style.opacity=copyOpacity;
+    content.style.transform=`translateY(${(1-copyOpacity)*18}px)`;
+  });
+}
+
+let featureTicking=false;
+
+window.addEventListener('scroll',()=>{
+
+  if(featureTicking)return;
+
+  featureTicking=true;
+
+  requestAnimationFrame(()=>{
+    updateFeatureJourney();
+    featureTicking=false;
+  });
+
+},{passive:true});
+
+window.addEventListener('resize',updateFeatureJourney);
+updateFeatureJourney();
+
+/* HEADER */
+
+const topBar=document.querySelector('.top');
+
+function updateHeader(){
+  topBar.classList.toggle('scrolled',window.scrollY>80);
+}
+
+window.addEventListener('scroll',updateHeader,{passive:true});
+updateHeader();
+
+/* ACTIVE NAV */
+
+const navLinks=[...document.querySelectorAll('.nav-inner a[href^="#"]')];
+const navTargets=navLinks
+  .map(link=>document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+
+const navObserver=new IntersectionObserver(entries=>{
+
+  entries.forEach(entry=>{
+
+    if(!entry.isIntersecting)return;
+
+    navLinks.forEach(link=>link.classList.remove('active'));
+
+    const active=navLinks.find(
+      link=>link.getAttribute('href')==='#'+entry.target.id
+    );
+
+    if(active)active.classList.add('active');
+  });
+
+},{
+  rootMargin:'-35% 0px -55% 0px',
+  threshold:0
+});
+
+navTargets.forEach(target=>navObserver.observe(target));
+
+/* ESC CLOSE */
+
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape' && nav.classList.contains('open')){
+    nav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+});
+
+</script>
+
+</body>
+</html>
